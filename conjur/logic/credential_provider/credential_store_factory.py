@@ -18,7 +18,7 @@ class CredentialStoreFactory:
     """
     CredentialStoreFactory
 
-    This class follows the Factory pattern to determine which credential store to choose
+    This cladss follows the Factory pattern to determine which credential store to choose
     """
     @classmethod
     def create_credential_store(cls):
