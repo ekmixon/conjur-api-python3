@@ -34,25 +34,25 @@ class PolicyParser:
         policy_name = 'policy - Manage policies'
         policy_usage = 'conjur [global options] policy <subcommand> [options] [args]'
 
-        policy_subparser = self.resource_subparsers \
-            .add_parser('policy',
-                        help='Manage policies',
-                        description=command_description(policy_name,
-                                                        policy_usage),
-                        epilog=command_epilog(
-                            'conjur policy load -f /tmp/myPolicy.yml -b backend/dev\t'
-                            'Creates and loads the policy myPolicy.yml under branch backend/dev\n'
-                            '    conjur policy replace -f /tmp/myPolicy.yml -b root\t\t'
-                            'Replaces the existing policy myPolicy.yml under branch root\n'
-                            '    conjur policy update -f /tmp/myPolicy.yml -b root\t\t'
-                            'Updates existing resources in the policy '
-                            '/tmp/myPolicy.yml under branch root\n',
-                            command='policy',
-                            subcommands=['load', 'replace', 'update']),
-                        usage=argparse.SUPPRESS,
-                        add_help=False,
-                        formatter_class=formatter)
-        return policy_subparser
+        return self.resource_subparsers.add_parser(
+            'policy',
+            help='Manage policies',
+            description=command_description(policy_name, policy_usage),
+            epilog=command_epilog(
+                'conjur policy load -f /tmp/myPolicy.yml -b backend/dev\t'
+                'Creates and loads the policy myPolicy.yml under branch backend/dev\n'
+                '    conjur policy replace -f /tmp/myPolicy.yml -b root\t\t'
+                'Replaces the existing policy myPolicy.yml under branch root\n'
+                '    conjur policy update -f /tmp/myPolicy.yml -b root\t\t'
+                'Updates existing resources in the policy '
+                '/tmp/myPolicy.yml under branch root\n',
+                command='policy',
+                subcommands=['load', 'replace', 'update'],
+            ),
+            usage=argparse.SUPPRESS,
+            add_help=False,
+            formatter_class=formatter,
+        )
 
     @staticmethod
     def _add_policy_load(policy_subparsers):
@@ -60,7 +60,7 @@ class PolicyParser:
         policy_load_usage = 'conjur [global options] policy load [options] [args]'
 
         load_policy_parser = policy_subparsers \
-            .add_parser('load',
+                .add_parser('load',
                         help='Load a policy and create resources',
                         description=command_description(policy_load_name,
                                                         policy_load_usage),
@@ -84,7 +84,7 @@ class PolicyParser:
         policy_replace_name = 'replace - Fully replace an existing policy'
         policy_replace_usage = 'conjur [global options] policy replace [options] [args]'
         replace_policy_parser = policy_subparsers \
-            .add_parser('replace',
+                .add_parser('replace',
                         help='Fully replace an existing policy',
                         description=command_description(policy_replace_name,
                                                         policy_replace_usage),
@@ -109,7 +109,7 @@ class PolicyParser:
         policy_update_name = 'update - Update existing resources in policy or create new resources'
         policy_update_usage = 'conjur [global options] policy update [options] [args]'
         update_policy_parser = policy_subparsers \
-            .add_parser('update',
+                .add_parser('update',
                         help='Update existing resources in policy or create new resources',
                         description=command_description(policy_update_name,
                                                         policy_update_usage),

@@ -101,11 +101,10 @@ class InitLogic:
             return not is_written
 
         with open(conjurrc_file_path, 'w') as config_fp:
-            _pretty_print_object = {}
+            _pretty_print_object = {
+                str(attr): value for attr, value in conjurrc_data.__dict__.items()
+            }
 
-            # Ensures that there are no None fields written to conjurrc
-            for attr,value in conjurrc_data.__dict__.items():
-                _pretty_print_object[str(attr)] = value
 
             config_fp.write("---\n")
             yaml.dump(_pretty_print_object, config_fp)

@@ -82,9 +82,7 @@ class TestRunner:  # pragma: no cover
         """
         @param test_modules: the tests classes wanted to run
         """
-        res = []
-        for test_module in test_modules:
-            res.append(self.__run_test_cases(test_module))
+        res = [self.__run_test_cases(test_module) for test_module in test_modules]
         exit_code = not all(res)
         if exit_code == 0:
             print("All tests passed")

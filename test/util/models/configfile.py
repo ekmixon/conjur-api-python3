@@ -24,7 +24,7 @@ class ConfigFile:
         # note this function parse file with only one configuration in it
         ret = ConfigFile()
         with open(file_path, 'r') as f:
-            for line in f.readlines():
+            for line in f:
                 if line.strip().startswith('conjur_account'):
                     ret.account = "".join(line.split(":")[1:]).strip()
                 if line.strip().startswith('conjur_url'):

@@ -16,8 +16,8 @@ class VariableData:
         self.action = arg_params['action']
         self.variable_id = arg_params['id']
         # pylint: disable=line-too-long
-        self.variable_version = arg_params['variable_version'] if arg_params['variable_version'] else None
-        self.value = arg_params['value'] if arg_params['value'] else None
+        self.variable_version = arg_params['variable_version'] or None
+        self.value = arg_params['value'] or None
 
     def __repr__(self):
         result = []

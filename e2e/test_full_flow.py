@@ -37,16 +37,18 @@ def run():
         client = conjur.Client(**CONJUR_INFO, **ACCOUNT_INFO)
 
     expected_value = str(time.time()).encode('utf-8')
-    print("Setting var '{}' to '{}'...".format(VARIABLE_PATH, expected_value))
+    print(f"Setting var '{VARIABLE_PATH}' to '{expected_value}'...")
     client.set(VARIABLE_PATH, expected_value)
 
-    print("Fetching var '{}'...".format(VARIABLE_PATH))
+    print(f"Fetching var '{VARIABLE_PATH}'...")
     actual_value = client.get(VARIABLE_PATH)
 
     print("Variable value retrieved:", actual_value)
 
-    assert actual_value == expected_value, \
-        "ERROR: Values '{}' and '{}' do not match!".format(expected_value, actual_value)
+    assert (
+        actual_value == expected_value
+    ), f"ERROR: Values '{expected_value}' and '{actual_value}' do not match!"
+
 
     print("Yay - variable setting and getting worked!")
 

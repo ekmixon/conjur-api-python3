@@ -28,7 +28,6 @@ class LoginLogic:
         self.credentials_provider = credentials_provider
 
     @classmethod
-    # pylint: disable=line-too-long,logging-fstring-interpolation
     def get_api_key(cls, ssl_verify, credential_data, password, conjurrc):
         """
         Method to fetch the user/host's API key from Conjur
@@ -43,7 +42,7 @@ class LoginLogic:
         elif ssl_verify and credential_data.machine.startswith("https"):
             # Catches the case where a user does not run in insecure mode but the
             # .conjurrc cert_file entry is empty
-            if conjurrc.cert_file == '' and ssl_verify:
+            if conjurrc.cert_file == '':
                 raise CertificateVerificationException
 
             certificate_path = conjurrc.cert_file

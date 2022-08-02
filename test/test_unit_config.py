@@ -28,16 +28,16 @@ class ConfigTest(unittest.TestCase):
         test_data = Config(config_file=self.GOOD_CONJURRC)
 
         for config_property, config_value in self.EXPECTED_CONFIG.items():
-            error_message = "Config attribute '{}' was '{}' instead of '{}'!".format(
-                config_property, getattr(test_data,config_property), config_value)
+            error_message = f"Config attribute '{config_property}' was '{getattr(test_data, config_property)}' instead of '{config_value}'!"
+
             self.assertEqual(getattr(test_data,config_property), config_value, error_message)
 
     def test_config_dictionary_has_appropriate_map(self):
         test_data = dict(Config(config_file=self.GOOD_CONJURRC))
 
         for config_property, config_value in self.EXPECTED_CONFIG.items():
-            error_message = "Config field '{}' was '{}' instead of '{}'!".format(
-                config_property, test_data[config_property], config_value)
+            error_message = f"Config field '{config_property}' was '{test_data[config_property]}' instead of '{config_value}'!"
+
             self.assertEqual(test_data[config_property], config_value, error_message)
 
 

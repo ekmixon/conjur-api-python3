@@ -66,7 +66,7 @@ def cli_arg_test(cli_args=None, **kwargs):
     cli_args += ['variable', 'get', '-i', 'foo']
     cli_command = 'cli {}'.format(' '.join(cli_args))
     default_args = {'debug': False}
-    expected_args = {**default_args, **kwargs}
+    expected_args = default_args | kwargs
 
     def test_cli_decorator(original_function):
         @wraps(original_function)

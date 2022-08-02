@@ -122,8 +122,17 @@ class CliIntegrationTestConfigurations(IntegrationTestCaseBase):
     @patch('builtins.input', return_value='yes')
     def test_https_conjurrc_is_created_successfully_with_extra_slash_in_url(self, mock_input):
         self.setup_cli_params({})
-        self.invoke_cli(self.cli_auth_params,
-                        ['init', '--url', self.client_params.hostname + "/", '--account', 'someaccount'])
+        self.invoke_cli(
+            self.cli_auth_params,
+            [
+                'init',
+                '--url',
+                f"{self.client_params.hostname}/",
+                '--account',
+                'someaccount',
+            ],
+        )
+
 
         utils.verify_conjurrc_contents('someaccount', self.client_params.hostname,
                                        self.environment.path_provider.certificate_path)

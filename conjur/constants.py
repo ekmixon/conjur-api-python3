@@ -6,6 +6,7 @@ Constants module
 This module holds all constants used across the codebase
 """
 
+
 # Builtins
 import os
 import platform
@@ -19,7 +20,7 @@ if os.name != "posix" and platform.system() == "Windows":
 else:
     INTERNAL_FILE_PREFIX="."
 
-DEFAULT_NETRC_FILE_NAME = INTERNAL_FILE_PREFIX + "netrc"
+DEFAULT_NETRC_FILE_NAME = f"{INTERNAL_FILE_PREFIX}netrc"
 
 DEFAULT_CONFIG_FILE = os.path.expanduser(os.path.join('~', '.conjurrc'))
 DEFAULT_NETRC_FILE = os.path.expanduser(os.path.join('~', DEFAULT_NETRC_FILE_NAME))

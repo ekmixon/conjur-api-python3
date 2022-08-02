@@ -59,10 +59,11 @@ class ApiTest(unittest.TestCase):
         for name, value in kwargs.items():
             params[name] = value
 
-        extra_args = {}
-        for extra_arg_name in ['api_token', 'auth', 'query']:
-            if locals()[extra_arg_name]:
-                extra_args[extra_arg_name] = locals()[extra_arg_name]
+        extra_args = {
+            extra_arg_name: locals()[extra_arg_name]
+            for extra_arg_name in ['api_token', 'auth', 'query']
+            if locals()[extra_arg_name]
+        }
 
         http_client.assert_called_once_with(method, endpoint, params, *args,
                                             **extra_args,

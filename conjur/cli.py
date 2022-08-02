@@ -307,10 +307,11 @@ class Cli():
             sys.exit(0)
 
         # Check whether we are running a command with required additional arguments/options
-        if args.resource not in ['list', 'whoami', 'init', 'login', 'logout']:
-            if 'action' not in args or not args.action:
-                parser.print_help()
-                sys.exit(0)
+        if args.resource not in ['list', 'whoami', 'init', 'login', 'logout'] and (
+            'action' not in args or not args.action
+        ):
+            parser.print_help()
+            sys.exit(0)
 
         return args.resource, args
 

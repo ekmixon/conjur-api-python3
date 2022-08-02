@@ -52,7 +52,7 @@ def invoke_endpoint(http_verb, endpoint, params, *args, check_errors=True,
     headers = {}
     if api_token:
         encoded_token = base64.b64encode(api_token.encode()).decode('utf-8')
-        headers['Authorization'] = 'Token token="{}"'.format(encoded_token)
+        headers['Authorization'] = f'Token token="{encoded_token}"'
 
     # By default, on each request the certificate will be verified. If there is
     # a failure in verification, the fallback solution will be passing in the
@@ -104,14 +104,15 @@ def invoke_request(http_verb, url, *args, query, ssl_verify, auth, headers):
                               headers=headers)
 
     except requests.exceptions.SSLError as ssl_error:
-        host_mismatch_message = re.search("hostname '.+' doesn't match", str(ssl_error))
-        if host_mismatch_message:
+        if host_mismatch_message := re.search(
+            "hostname '.+' doesn't match", str(ssl_error)
+        ):
             raise CertificateHostnameMismatchException from ssl_error
         raise ssl_error
 
 # Not coverage tested since this code should never be hit
 # from checked-in code
-def enable_http_logging(): #pragma: no cover
+def enable_http_logging():    #pragma: no cover
     """
     This method enables verbose http logging, which may be useful
     for debugging problems with invocation code.
@@ -126,16 +127,3 @@ def enable_http_logging(): #pragma: no cover
     # the beginning of the method.
     raise RuntimeError("If this line gets checked in uncommented or"
                        "is removed, the PR should not be approved")
-
-    # pylint: disable=unreachable,import-outside-toplevel
-    #pylint: disable=import-outside-toplevel
-    from http.client import HTTPConnection
-    HTTPConnection.debuglevel = 1
-
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.DEBUG)
-
-    logging.warning("WARN: Using HTTP logging!")
-    requests_log = logging.getLogger("urllib3")
-    requests_log.setLevel(logging.DEBUG)
-    requests_log.propagate = True

@@ -27,18 +27,18 @@ class InitParser:
         init_name = 'init - Initialize Conjur configuration'
         input_usage = 'conjur [global options] init [options] [args]'
 
-        init_subparser = self.resource_subparsers \
-            .add_parser('init',
-                        help='Initialize Conjur configuration',
-                        description=command_description(init_name,
-                                                        input_usage),
-                        epilog=command_epilog(
-                            'conjur init -a my_org -u https://conjur-server\t'
-                            'Initializes Conjur configuration and writes to file (.conjurrc)'),
-                        usage=argparse.SUPPRESS,
-                        add_help=False,
-                        formatter_class=formatter)
-        return init_subparser
+        return self.resource_subparsers.add_parser(
+            'init',
+            help='Initialize Conjur configuration',
+            description=command_description(init_name, input_usage),
+            epilog=command_epilog(
+                'conjur init -a my_org -u https://conjur-server\t'
+                'Initializes Conjur configuration and writes to file (.conjurrc)'
+            ),
+            usage=argparse.SUPPRESS,
+            add_help=False,
+            formatter_class=formatter,
+        )
 
     @staticmethod
     def _add_init_options(sub_parser):

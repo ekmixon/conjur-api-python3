@@ -111,10 +111,7 @@ def invoke_cli_as_process(test_runner, *args, exit_code=0) -> str:
             max_interactions = MAX_INTERACTIONS_ALLOWED
             while process.poll() is None and max_interactions > 0:
                 max_interactions -= 1
-                # timeout must be integer and should be the maximum seconds
-                # waiting for the conjurCli to process an input
-                interactive_input = get_input_if_exist(timeout=1)
-                if interactive_input:
+                if interactive_input := get_input_if_exist(timeout=1):
                     # pass the interactive input into conjurCli process
                     process.stdin.write(interactive_input)
                 else:
@@ -123,8 +120,12 @@ def invoke_cli_as_process(test_runner, *args, exit_code=0) -> str:
             print(e)
         output = process.communicate(timeout=30)[0]
         process_exit_code = process.returncode
-        test_runner.assertEqual(process_exit_code, exit_code,
-                                "ERROR: CLI returned an unexpected error status code: '{}'".format(cli_args))
+        test_runner.assertEqual(
+            process_exit_code,
+            exit_code,
+            f"ERROR: CLI returned an unexpected error status code: '{cli_args}'",
+        )
+
     return output.decode('utf-8')
 
 
@@ -140,8 +141,6 @@ def get_input_if_exist(timeout=0.1):
 
     try:
         sys_in = utils.run_func_with_timeout(timeout, get_input)
-        if sys_in:
-            return (sys_in + "\n").encode('utf-8')
-        return None
+        return (sys_in + "\n").encode('utf-8') if sys_in else None
     except:
         return None

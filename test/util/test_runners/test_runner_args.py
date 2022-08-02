@@ -16,7 +16,7 @@ class TestRunnerArgs:
         self.password = password
         self.test_name_identifier = test_name_identifier
         # Tests
-        self.invoke_cli_as_process = cli_to_test is not None and len(cli_to_test)>0
+        self.invoke_cli_as_process = cli_to_test is not None and cli_to_test != ""
         if self.invoke_cli_as_process and test_name_identifier == 'integration':
             self.test_name_identifier = "test_with_process"
         self.cli_to_test = cli_to_test

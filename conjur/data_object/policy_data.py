@@ -20,9 +20,12 @@ class PolicyData:
     def __repr__(self):
         result = []
         # pylint: disable=multiple-statements
-        if self.action=='load': result.append("Loading ")
-        if self.action=='replace': result.append("Replacing ")
-        if self.action=='update': result.append("Updating ")
+        if self.action == 'load':
+            result.append("Loading ")
+        elif self.action == 'replace':
+            result.append("Replacing ")
+        elif self.action == 'update':
+            result.append("Updating ")
         if self.file: result.append(f"'{self.file}' ")
         if self.branch: result.append(f"under '{self.branch}'...")
         return ''.join(result)

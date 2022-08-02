@@ -32,15 +32,8 @@ class TestRunnerPathProvider():  # pragma: no cover
         else:
             TestRunnerPathProvider.__instance = self
 
-        if root_dir:
-            self.ROOT_DIR = root_dir
-        else:
-            self.ROOT_DIR = Path.home()
-
-        if file_helper_dir:
-            self.HELPERS_FILES_DIR = file_helper_dir
-        else:
-            self.HELPERS_FILES_DIR = './test'
+        self.ROOT_DIR = root_dir or Path.home()
+        self.HELPERS_FILES_DIR = file_helper_dir or './test'
 
     @property
     def conjurrc_path(self):

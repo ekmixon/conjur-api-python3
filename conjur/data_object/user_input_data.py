@@ -21,6 +21,8 @@ class UserInputData:
         result = []
         # pylint: disable=multiple-statements
         if self.action: result.append(f"'action': '{self.action}'")
-        if self.action == 'rotate-api-key': result.append(f"'id': '{self.user_id}'")
-        if self.action == 'change-password': result.append("'new_password': '****'")
+        if self.action == 'change-password':
+            result.append("'new_password': '****'")
+        elif self.action == 'rotate-api-key':
+            result.append(f"'id': '{self.user_id}'")
         return '{'+', '.join(result) + '}'

@@ -82,8 +82,8 @@ def print_instead_of_raise_error(self, variable_id, error_message_regex):
 # *************** POLICY ***************
 
 def generate_policy_string():
-    variable_1 = 'simple/basic/{}'.format(uuid.uuid4().hex)
-    variable_2 = 'simple/space filled/{}'.format(uuid.uuid4().hex)
+    variable_1 = f'simple/basic/{uuid.uuid4().hex}'
+    variable_2 = f'simple/space filled/{uuid.uuid4().hex}'
     variable_3 = 'simple/special @#$%^&*(){{}}[]._+/{id}'.format(id=uuid.uuid4().hex)
 
     # We purposefully build this policy like this
@@ -183,9 +183,10 @@ def save_credentials(credentials):
     cred_store.save(credentials)
 
 def is_netrc_exists():
-    if not os.path.exists(DEFAULT_NETRC_FILE) or os.path.getsize(DEFAULT_NETRC_FILE) == 0:
-        return False
-    return True
+    return bool(
+        os.path.exists(DEFAULT_NETRC_FILE)
+        and os.path.getsize(DEFAULT_NETRC_FILE) != 0
+    )
 
 # *************************************************
 # *************** UNIT TESTS HELPERS **************

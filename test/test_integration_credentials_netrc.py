@@ -186,7 +186,7 @@ class CliIntegrationTestCredentialsNetrc(IntegrationTestCaseBase):
                         ['login', '-i', 'someuser', '-p', extract_api_key_from_message])
 
         # Creates a password that meets Conjur password complexity standards
-        password = string.hexdigits + "$!@"
+        password = f"{string.hexdigits}$!@"
         self.invoke_cli(self.cli_auth_params,
                         ['user', 'change-password', '-p', password])
 
@@ -391,7 +391,7 @@ class CliIntegrationTestCredentialsNetrc(IntegrationTestCaseBase):
         will still be accessible
         """
         utils.setup_cli(self)
-        variable_name = "someversionedvar" + uuid.uuid4().hex
+        variable_name = f"someversionedvar{uuid.uuid4().hex}"
         policy = f"- !variable {variable_name}"
         utils.load_policy_from_string(self, policy)
 

@@ -20,10 +20,16 @@ class ScreenOptionsParser:
         """
         global_optional = self.parser.add_argument_group("Global options")
         global_optional.add_argument('-h', '--help', action='help', help="Display help list")
-        global_optional.add_argument('-v', '--version', action='version',
-                                     help="Display version number",
-                                     version='Conjur CLI version ' + __version__ + "\n"
-                                             + conjur_copyright())
+        global_optional.add_argument(
+            '-v',
+            '--version',
+            action='version',
+            help="Display version number",
+            version=(
+                f'Conjur CLI version {__version__}' + "\n" + conjur_copyright()
+            ),
+        )
+
 
         global_optional.add_argument('-d', '--debug',
                                      help='Enable debugging output',

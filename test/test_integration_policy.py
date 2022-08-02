@@ -59,16 +59,21 @@ class CliIntegrationPolicy(IntegrationTestCaseBase):  # pragma: no cover
         expected_object = {
             'version': json_result['version'],
             'created_roles': {
-                f'{account_name}:user:' + user_id1: {
-                    'id': f'{account_name}:user:' + user_id1,
-                    'api_key': json_result['created_roles'][f'{account_name}:user:' + user_id1]['api_key'],
+                f'{account_name}:user:{user_id1}': {
+                    'id': f'{account_name}:user:{user_id1}',
+                    'api_key': json_result['created_roles'][
+                        f'{account_name}:user:{user_id1}'
+                    ]['api_key'],
                 },
-                f'{account_name}:user:' + user_id2: {
-                    'id': f'{account_name}:user:' + user_id2,
-                    'api_key': json_result['created_roles'][f'{account_name}:user:' + user_id2]['api_key'],
-                }
-            }
+                f'{account_name}:user:{user_id2}': {
+                    'id': f'{account_name}:user:{user_id2}',
+                    'api_key': json_result['created_roles'][
+                        f'{account_name}:user:{user_id2}'
+                    ]['api_key'],
+                },
+            },
         }
+
 
         self.assertDictEqual(json_result, expected_object)
 
@@ -197,16 +202,21 @@ class CliIntegrationPolicy(IntegrationTestCaseBase):  # pragma: no cover
         expected_object = {
             'version': json_result['version'],
             'created_roles': {
-                f'{account_name}:user:' + user_id1: {
-                    'id': f'{account_name}:user:' + user_id1,
-                    'api_key': json_result['created_roles'][f'{account_name}:user:' + user_id1]['api_key'],
+                f'{account_name}:user:{user_id1}': {
+                    'id': f'{account_name}:user:{user_id1}',
+                    'api_key': json_result['created_roles'][
+                        f'{account_name}:user:{user_id1}'
+                    ]['api_key'],
                 },
-                f'{account_name}:user:' + user_id2: {
-                    f'id': f'{account_name}:user:' + user_id2,
-                    'api_key': json_result['created_roles'][f'{account_name}:user:' + user_id2]['api_key'],
-                }
-            }
+                f'{account_name}:user:{user_id2}': {
+                    'id': f'{account_name}:user:{user_id2}',
+                    'api_key': json_result['created_roles'][
+                        f'{account_name}:user:{user_id2}'
+                    ]['api_key'],
+                },
+            },
         }
+
 
         self.assertDictEqual(json_result, expected_object)
 
@@ -250,16 +260,21 @@ class CliIntegrationPolicy(IntegrationTestCaseBase):  # pragma: no cover
         expected_object = {
             'version': json_result['version'],
             'created_roles': {
-                f'{account_name}:user:' + user_id1: {
-                    'id': f'{account_name}:user:' + user_id1,
-                    'api_key': json_result['created_roles'][f'{account_name}:user:' + user_id1]['api_key'],
+                f'{account_name}:user:{user_id1}': {
+                    'id': f'{account_name}:user:{user_id1}',
+                    'api_key': json_result['created_roles'][
+                        f'{account_name}:user:{user_id1}'
+                    ]['api_key'],
                 },
-                f'{account_name}:user:' + user_id2: {
-                    'id': f'{account_name}:user:' + user_id2,
-                    'api_key': json_result['created_roles'][f'{account_name}:user:' + user_id2]['api_key'],
-                }
-            }
+                f'{account_name}:user:{user_id2}': {
+                    'id': f'{account_name}:user:{user_id2}',
+                    'api_key': json_result['created_roles'][
+                        f'{account_name}:user:{user_id2}'
+                    ]['api_key'],
+                },
+            },
         }
+
 
         self.assertDictEqual(json_result, expected_object)
 

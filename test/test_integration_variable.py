@@ -56,7 +56,7 @@ class CliIntegrationTestVariable(IntegrationTestCaseBase):  # pragma: no cover
         Therefore, the variable name needs to be a random string so that the version
         will still be accessible
         """
-        variable_name = "someversionedvar" + uuid.uuid4().hex
+        variable_name = f"someversionedvar{uuid.uuid4().hex}"
         policy = f"- !variable {variable_name}"
         utils.load_policy_from_string(self, policy)
 
@@ -68,7 +68,7 @@ class CliIntegrationTestVariable(IntegrationTestCaseBase):  # pragma: no cover
 
     @integration_test()
     def test_variable_different_version_calls_returns_different_versions(self):
-        variable_name = "someversionedsecret" + uuid.uuid4().hex
+        variable_name = f"someversionedsecret{uuid.uuid4().hex}"
         policy = f"- !variable {variable_name}"
         utils.load_policy_from_string(self, policy)
 

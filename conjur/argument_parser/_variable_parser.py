@@ -32,24 +32,24 @@ class VariableParser:
         variable_name = 'variable - Manage variables'
         variable_usage = 'conjur [global options] variable <subcommand> [options] [args]'
 
-        variable_parser = self.resource_subparsers \
-            .add_parser('variable',
-                        help='Manage variables',
-                        description=command_description(variable_name,
-                                                        variable_usage),
-                        epilog=command_epilog(
-                            'conjur variable get -i secrets/mysecret\t\t\t'
-                            'Gets the value of variable secrets/mysecret\n'
-                            '    conjur variable get -i secrets/mysecret "secrets/my secret"\t'
-                            'Gets the values of variables secrets/mysecret and secrets/my secret\n'
-                            '    conjur variable set -i secrets/mysecret -v my_secret_value\t'
-                            'Sets the value of variable secrets/mysecret to my_secret_value\n',
-                            command='variable',
-                            subcommands=['get', 'set']),
-                        usage=argparse.SUPPRESS,
-                        add_help=False,
-                        formatter_class=formatter)
-        return variable_parser
+        return self.resource_subparsers.add_parser(
+            'variable',
+            help='Manage variables',
+            description=command_description(variable_name, variable_usage),
+            epilog=command_epilog(
+                'conjur variable get -i secrets/mysecret\t\t\t'
+                'Gets the value of variable secrets/mysecret\n'
+                '    conjur variable get -i secrets/mysecret "secrets/my secret"\t'
+                'Gets the values of variables secrets/mysecret and secrets/my secret\n'
+                '    conjur variable set -i secrets/mysecret -v my_secret_value\t'
+                'Sets the value of variable secrets/mysecret to my_secret_value\n',
+                command='variable',
+                subcommands=['get', 'set'],
+            ),
+            usage=argparse.SUPPRESS,
+            add_help=False,
+            formatter_class=formatter,
+        )
 
     @staticmethod
     def _add_variable_get(variable_subparser):
@@ -57,7 +57,7 @@ class VariableParser:
         variable_get_usage = 'conjur [global options] variable get [options] [args]'
 
         variable_get_subcommand_parser = variable_subparser \
-            .add_parser(name="get",
+                .add_parser(name="get",
                         help='Get the value of one or more variables',
                         description=command_description(
                             variable_get_name, variable_get_usage),
@@ -87,7 +87,7 @@ class VariableParser:
         variable_set_name = 'set - Set the value of a variable'
         variable_set_usage = 'conjur [global options] variable set [options] [args]'
         variable_set_subcommand_parser = variable_subparser \
-            .add_parser(name="set",
+                .add_parser(name="set",
                         help='Set the value of a variable',
                         description=command_description(
                             variable_set_name, variable_set_usage),

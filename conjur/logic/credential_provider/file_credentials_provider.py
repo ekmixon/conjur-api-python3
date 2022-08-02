@@ -83,10 +83,7 @@ class FileCredentialsProvider(CredentialsStoreInterface):
 
         # The netrc_authn will be empty if the user already logged out
         # (their entry isn't found) and attempts to logout again
-        if netrc_auth == "":
-            return False
-
-        return True
+        return netrc_auth != ""
 
     def update_api_key_entry(self, user_to_update, credential_data, new_api_key):
         """
@@ -150,7 +147,6 @@ class FileCredentialsProvider(CredentialsStoreInterface):
 
     def _get_credentials_from_file(self, conjurrc_conjur_url):  # pragma: no cover
         try:
-            loaded_credentials = {}
             netrc_auth = ""
             netrc_obj = netrc.netrc(self.netrc_path)
 
@@ -162,9 +158,12 @@ class FileCredentialsProvider(CredentialsStoreInterface):
                     break
 
             login, _, password = netrc_auth
-            loaded_credentials[MACHINE] = netrc_host_url
-            loaded_credentials[PASSWORD] = password
-            loaded_credentials[LOGIN] = login
+            loaded_credentials = {
+                MACHINE: netrc_host_url,
+                PASSWORD: password,
+                LOGIN: login,
+            }
+
             return CredentialsData.convert_dict_to_obj(loaded_credentials)
         except netrc.NetrcParseError as netrc_error:
             raise Exception("Error: netrc is in an invalid format. "

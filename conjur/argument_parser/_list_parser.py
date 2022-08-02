@@ -28,27 +28,26 @@ class ListParser:
         list_name = 'list - List resources within an organization\'s account'
         list_usage = 'conjur [global options] list [options] [args]'
 
-        list_subparser = self.resource_subparsers \
-            .add_parser('list',
-                        help='List all available resources belonging to this account',
-                        description=command_description(list_name,
-                                                        list_usage),
-                        epilog=command_epilog(
-                            'conjur list --kind=variable\t\t\t'
-                            'Filters list by variable\n'
-                            '    conjur list --limit=20\t\t\t'
-                            'Lists first 20 resources\n'
-                            '    conjur list --offset=4\t\t\t'
-                            'Skips the first 4 resources in the list and displays all the rest\n'
-                            '    conjur list --role=myorg:user:superuser\t'
-                            'Shows resources that superuser is entitled to see\n'
-                            '    conjur list --search=superuser\t\t'
-                            'Searches for resources with superuser\n'),
-                        usage=argparse.SUPPRESS,
-                        add_help=False,
-                        formatter_class=formatter)
-
-        return list_subparser
+        return self.resource_subparsers.add_parser(
+            'list',
+            help='List all available resources belonging to this account',
+            description=command_description(list_name, list_usage),
+            epilog=command_epilog(
+                'conjur list --kind=variable\t\t\t'
+                'Filters list by variable\n'
+                '    conjur list --limit=20\t\t\t'
+                'Lists first 20 resources\n'
+                '    conjur list --offset=4\t\t\t'
+                'Skips the first 4 resources in the list and displays all the rest\n'
+                '    conjur list --role=myorg:user:superuser\t'
+                'Shows resources that superuser is entitled to see\n'
+                '    conjur list --search=superuser\t\t'
+                'Searches for resources with superuser\n'
+            ),
+            usage=argparse.SUPPRESS,
+            add_help=False,
+            formatter_class=formatter,
+        )
 
     @staticmethod
     def _add_list_options(list_subparser):

@@ -35,20 +35,23 @@ def main_epilog():
     """
     This method builds the footer for the main help screen.
     """
-    msg = "To get help on a specific command, see `conjur <command> -h | --help`\n\n"
-    msg += "To start using Conjur with your environment, you must first initialize " \
-           "the configuration. See `conjur init -h` for more information."
-    return msg
+    return (
+        "To get help on a specific command, see `conjur <command> -h | --help`\n\n"
+        + "To start using Conjur with your environment, you must first initialize "
+        "the configuration. See `conjur init -h` for more information."
+    )
 
 
 def command_epilog(example, command=None, subcommands=None):
     """
     This method builds the footer for each command help screen.
     """
-    refer_to_help = "See more details in each subcommand's help:"
     if subcommands:
-        res = ""
-        res += " -h\n".join(f"conjur {command} {subcommand}" for subcommand in subcommands)
+        res = "" + " -h\n".join(
+            f"conjur {command} {subcommand}" for subcommand in subcommands
+        )
+
+        refer_to_help = "See more details in each subcommand's help:"
         return f"{refer_to_help}\n{res}"
     return f"Examples:\n    {example}"
 

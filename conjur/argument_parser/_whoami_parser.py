@@ -27,15 +27,14 @@ class WhoamiParser:
         whoami_name = 'whoami - Print information about the current logged-in user'
         whoami_usage = 'conjur [global options] whoami [options]'
 
-        whoami_subparser = self.resource_subparsers \
-            .add_parser('whoami',
-                        help='Provides information about the current logged-in user',
-                        description=command_description(whoami_name,
-                                                        whoami_usage),
-                        usage=argparse.SUPPRESS,
-                        add_help=False,
-                        formatter_class=formatter)
-        return whoami_subparser
+        return self.resource_subparsers.add_parser(
+            'whoami',
+            help='Provides information about the current logged-in user',
+            description=command_description(whoami_name, whoami_usage),
+            usage=argparse.SUPPRESS,
+            add_help=False,
+            formatter_class=formatter,
+        )
 
     @staticmethod
     def _add_whoami_options(whoami_subparser):

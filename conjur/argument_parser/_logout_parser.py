@@ -27,19 +27,20 @@ class LogoutParser:
         logout_name = 'logout - Log out and delete local cache'
         logout_usage = 'conjur [global options] logout [options]'
 
-        logout_subparser = self.resource_subparsers \
-            .add_parser('logout',
-                        help='Log out from Conjur server and clear local cache',
-                        description=command_description(logout_name,
-                                                        logout_usage),
-                        epilog=command_epilog('conjur logout\t'
-                                              'Logs out the user from the Conjur'
-                                              ' server and deletes the local '
-                                              'cache (netrc file)'),
-                        usage=argparse.SUPPRESS,
-                        add_help=False,
-                        formatter_class=formatter)
-        return logout_subparser
+        return self.resource_subparsers.add_parser(
+            'logout',
+            help='Log out from Conjur server and clear local cache',
+            description=command_description(logout_name, logout_usage),
+            epilog=command_epilog(
+                'conjur logout\t'
+                'Logs out the user from the Conjur'
+                ' server and deletes the local '
+                'cache (netrc file)'
+            ),
+            usage=argparse.SUPPRESS,
+            add_help=False,
+            formatter_class=formatter,
+        )
 
     @staticmethod
     def _add_logout_options(logout_subparser):

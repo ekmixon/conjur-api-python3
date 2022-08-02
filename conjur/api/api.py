@@ -122,7 +122,7 @@ class Api():
         params = {
             'login': self.login_id
         }
-        params.update(self._default_params)
+        params |= self._default_params
 
         logging.debug("Authenticating to %s...", self._url)
         return invoke_endpoint(HttpVerb.POST, ConjurEndpoint.AUTHENTICATE, params,
@@ -136,7 +136,7 @@ class Api():
         params = {
             'account': self._account
         }
-        params.update(self._default_params)
+        params |= self._default_params
         if list_constraints is not None:
             json_response = invoke_endpoint(HttpVerb.GET, ConjurEndpoint.RESOURCES,
                                             params,
@@ -171,7 +171,7 @@ class Api():
             'kind': self.KIND_VARIABLE,
             'identifier': variable_id,
         }
-        params.update(self._default_params)
+        params |= self._default_params
 
         query_params = {}
         if version is not None:
@@ -179,8 +179,6 @@ class Api():
                 'version': version
             }
 
-        # pylint: disable=no-else-return
-        if version is not None:
             return invoke_endpoint(HttpVerb.GET, ConjurEndpoint.SECRETS, params,
                                    api_token=self.api_token, query=query_params,
                                    ssl_verify=self._ssl_verify).content
@@ -196,11 +194,13 @@ class Api():
         """
         assert variable_ids, 'Variable IDs must not be empty!'
 
-        full_variable_ids = []
-        for variable_id in variable_ids:
-            full_variable_ids.append(self.SECRET_ID_FORMAT.format(account=self._account,
-                                                                  kind=self.KIND_VARIABLE,
-                                                                  id=variable_id))
+        full_variable_ids = [
+            self.SECRET_ID_FORMAT.format(
+                account=self._account, kind=self.KIND_VARIABLE, id=variable_id
+            )
+            for variable_id in variable_ids
+        ]
+
         query_params = {
             'variable_ids': ','.join(full_variable_ids),
         }
@@ -234,7 +234,7 @@ class Api():
             'kind': self.KIND_VARIABLE,
             'identifier': variable_id,
         }
-        params.update(self._default_params)
+        params |= self._default_params
 
         return invoke_endpoint(HttpVerb.POST, ConjurEndpoint.SECRETS, params,
                                value, api_token=self.api_token,
@@ -249,7 +249,7 @@ class Api():
         params = {
             'identifier': policy_id,
         }
-        params.update(self._default_params)
+        params |= self._default_params
 
         policy_data = None
         with open(policy_file, 'r') as content_file:
@@ -259,8 +259,7 @@ class Api():
                                         policy_data, api_token=self.api_token,
                                         ssl_verify=self._ssl_verify).text
 
-        policy_changes = json.loads(json_response)
-        return policy_changes
+        return json.loads(json_response)
 
     def load_policy_file(self, policy_id, policy_file):
         """
@@ -298,36 +297,41 @@ class Api():
         query_params = {
             'role': resource.full_id()
         }
-        response = invoke_endpoint(HttpVerb.PUT, ConjurEndpoint.ROTATE_API_KEY,
-                                   self._default_params,
-                                   api_token=self.api_token,
-                                   ssl_verify=self._ssl_verify,
-                                   query=query_params).text
-        return response
+        return invoke_endpoint(
+            HttpVerb.PUT,
+            ConjurEndpoint.ROTATE_API_KEY,
+            self._default_params,
+            api_token=self.api_token,
+            ssl_verify=self._ssl_verify,
+            query=query_params,
+        ).text
 
     def rotate_personal_api_key(self, logged_in_user, current_password):
         """
         This method is used to rotate a personal API key
         """
-        response = invoke_endpoint(HttpVerb.PUT, ConjurEndpoint.ROTATE_API_KEY,
-                                   self._default_params,
-                                   api_token=self.api_token,
-                                   auth=(logged_in_user, current_password),
-                                   ssl_verify=self._ssl_verify).text
-        return response
+        return invoke_endpoint(
+            HttpVerb.PUT,
+            ConjurEndpoint.ROTATE_API_KEY,
+            self._default_params,
+            api_token=self.api_token,
+            auth=(logged_in_user, current_password),
+            ssl_verify=self._ssl_verify,
+        ).text
 
     def change_personal_password(self, logged_in_user, current_password, new_password):
         """
         This method is used to change own password
         """
-        response = invoke_endpoint(HttpVerb.PUT, ConjurEndpoint.CHANGE_PASSWORD,
-                                   self._default_params,
-                                   new_password,
-                                   api_token=self.api_token,
-                                   auth=(logged_in_user, current_password),
-                                   ssl_verify=self._ssl_verify
-                                   ).text
-        return response
+        return invoke_endpoint(
+            HttpVerb.PUT,
+            ConjurEndpoint.CHANGE_PASSWORD,
+            self._default_params,
+            new_password,
+            api_token=self.api_token,
+            auth=(logged_in_user, current_password),
+            ssl_verify=self._ssl_verify,
+        ).text
 
     def whoami(self):
         """

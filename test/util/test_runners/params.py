@@ -14,7 +14,7 @@ class ClientParams:
         self.account = account
         self.login = login
         # when we run the tests using nose2 script we will use the CONJUR_AUTHN_API_KEY env variable
-        self.env_api_key = api_key if api_key else os.environ['CONJUR_AUTHN_API_KEY']
+        self.env_api_key = api_key or os.environ['CONJUR_AUTHN_API_KEY']
 
 
 class TestEnvironmentParams:

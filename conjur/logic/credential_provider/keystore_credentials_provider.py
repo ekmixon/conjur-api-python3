@@ -52,19 +52,21 @@ class KeystoreCredentialsProvider(CredentialsStoreInterface):
         """
         Method for fetching user credentials from the system's keyring
         """
-        loaded_credentials = {}
         if not self.is_exists(conjurrc_conjur_url):
             raise CredentialRetrievalException
 
-        for attr in KEYSTORE_ATTRIBUTES:
-            loaded_credentials[attr] = KeystoreWrapper.get_password(conjurrc_conjur_url, attr)
+        loaded_credentials = {
+            attr: KeystoreWrapper.get_password(conjurrc_conjur_url, attr)
+            for attr in KEYSTORE_ATTRIBUTES
+        }
+
         return CredentialsData.convert_dict_to_obj(loaded_credentials)
 
     def is_exists(self, conjurrc_conjur_url) -> bool:
-        for attr in KEYSTORE_ATTRIBUTES:
-            if KeystoreWrapper.get_password(conjurrc_conjur_url, attr) is None:
-                return False
-        return True
+        return all(
+            KeystoreWrapper.get_password(conjurrc_conjur_url, attr) is not None
+            for attr in KEYSTORE_ATTRIBUTES
+        )
 
     def update_api_key_entry(self, user_to_update, credential_data, new_api_key):
         """

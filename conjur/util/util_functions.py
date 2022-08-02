@@ -59,7 +59,7 @@ def configure_env_var_with_keyring():
     else:
         logging.debug(f"Platform {platform.system()} not supported")
 
-def get_current_os() -> OSTypes: # pragma: no cover
+def get_current_os() -> OSTypes:    # pragma: no cover
     """
     Determine which os we currently use
     """
@@ -67,6 +67,4 @@ def get_current_os() -> OSTypes: # pragma: no cover
         return OSTypes.MAC_OS
     if platform.system() == "Linux":
         return OSTypes.LINUX
-    if platform.system() == "Windows":
-        return OSTypes.WINDOWS
-    return OSTypes.UNKNOWN
+    return OSTypes.WINDOWS if platform.system() == "Windows" else OSTypes.UNKNOWN

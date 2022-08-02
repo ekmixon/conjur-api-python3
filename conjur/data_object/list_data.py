@@ -24,12 +24,7 @@ class ListData:
         """
         Method for building a dictionary from all attributes that have values
         """
-        list_dict={}
-        for attr, value in self.__dict__.items():
-            if value:
-                list_dict[str(attr)] = value
-
-        return list_dict
+        return {str(attr): value for attr, value in self.__dict__.items() if value}
 
     def __repr__(self):
         result = []

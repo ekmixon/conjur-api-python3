@@ -28,25 +28,26 @@ class LoginParser:
         login_name = 'login - Log in to Conjur server'
         login_usage = 'conjur [global options] login [options] [args]'
 
-        login_subparser = self.resource_subparsers \
-            .add_parser('login',
-                        help='Log in to Conjur server',
-                        description=command_description(login_name,
-                                                        login_usage),
-                        epilog=command_epilog('conjur login \t\t\t\t'
-                                              'Prompts for the login name and '
-                                              'password to log in to Conjur server\n'
-                                              '    conjur login -i admin \t\t\t'
-                                              'Prompts for password of the admin user '
-                                              'to log in to Conjur server\n'
-                                              '    conjur login -i admin -p Myp@SSw0rds!\t'
-                                              "Logs the admin user in to Conjur server and "
-                                              "saves the login name and password in either "
-                                              "the system's credential store or netrc"),
-                        usage=argparse.SUPPRESS,
-                        add_help=False,
-                        formatter_class=formatter)
-        return login_subparser
+        return self.resource_subparsers.add_parser(
+            'login',
+            help='Log in to Conjur server',
+            description=command_description(login_name, login_usage),
+            epilog=command_epilog(
+                'conjur login \t\t\t\t'
+                'Prompts for the login name and '
+                'password to log in to Conjur server\n'
+                '    conjur login -i admin \t\t\t'
+                'Prompts for password of the admin user '
+                'to log in to Conjur server\n'
+                '    conjur login -i admin -p Myp@SSw0rds!\t'
+                "Logs the admin user in to Conjur server and "
+                "saves the login name and password in either "
+                "the system's credential store or netrc"
+            ),
+            usage=argparse.SUPPRESS,
+            add_help=False,
+            formatter_class=formatter,
+        )
 
     @staticmethod
     def _add_login_options(login_subparser):

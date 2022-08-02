@@ -134,16 +134,14 @@ class InitController:
             except CertificateHostnameMismatchException:
                 raise
             except Exception as error:
-                # Check for catching if the endpoint is exists. If the endpoint does not exist,
-                # a 401 status code will be returned.
-                # If the endpoint does not exist, the user will be prompted to enter in their account.
-                # pylint: disable=no-member
-                if hasattr(error.response, 'status_code') and str(error.response.status_code) == '401':
-                    conjurrc_data.conjur_account = input("Enter the Conjur account name (required): ").strip()
-                    if conjurrc_data.conjur_account is None or conjurrc_data.conjur_account == '':
-                        raise RuntimeError("Error: account is required")
-                else:
+                if (
+                    not hasattr(error.response, 'status_code')
+                    or str(error.response.status_code) != '401'
+                ):
                     raise
+                conjurrc_data.conjur_account = input("Enter the Conjur account name (required): ").strip()
+                if conjurrc_data.conjur_account is None or conjurrc_data.conjur_account == '':
+                    raise RuntimeError("Error: account is required")
 
     def write_certificate(self, fetched_certificate):
         """
