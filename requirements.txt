@@ -7,7 +7,7 @@ keyring>=23.0.0
 pyopenssl>=20.0.0
 PyInstaller>=4.0
 PyYAML>=5.3.1
-requests>=2.24.0
+requests>=2.32.0
 twine>=3.2.0
 
 # https://nvd.nist.gov/vuln/detail/CVE-2020-26137
